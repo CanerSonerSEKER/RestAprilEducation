@@ -11,8 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Services\" />
-    <Folder Include="Models\Repositories\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RestAprilEducation.Application\RestAprilEducation.Application.csproj" />
+    <ProjectReference Include="..\RestAprilEducation.Persistence\RestAprilEducation.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

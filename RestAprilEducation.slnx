@@ -1,3 +1,18 @@
 <Solution>
-  <Project Path="RestAprilEducation/RestAprilEducation.csproj" />
+  <Folder Name="/Application/">
+    <Project Path="RestAprilEducation.Application/RestAprilEducation.Application.csproj" Id="c951450d-08ea-4549-b1ed-f67379d840df" />
+  </Folder>
+  <Folder Name="/Domain/">
+    <Project Path="RestAprilEducation.Domain/RestAprilEducation.Domain.csproj" Id="a42661c6-da4b-49ac-8469-3e6fe4b2099a" />
+  </Folder>
+  <Folder Name="/Infrastructure/" />
+  <Folder Name="/Infrastructure/Broker/" />
+  <Folder Name="/Infrastructure/Caching/" />
+  <Folder Name="/Infrastructure/Logging/" />
+  <Folder Name="/Infrastructure/Persistence/">
+    <Project Path="RestAprilEducation.Persistence/RestAprilEducation.Persistence.csproj" Id="8100c479-3657-4bc6-9341-97fd61cbcd92" />
+  </Folder>
+  <Folder Name="/Presentation/">
+    <Project Path="RestAprilEducation/RestAprilEducation.API.csproj" />
+  </Folder>
 </Solution>
