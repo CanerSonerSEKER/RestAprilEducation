@@ -6,5 +6,7 @@ namespace RestAprilEducation.Application.Products
     {
         Task<List<Product>> GetAll();
 
+        Task<Product> CreateAsync(Product product); 
+
     }
 }

@@ -1,3 +1,5 @@
+using RestAprilEducation.Application.Products;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +17,8 @@ builder.Services.AddOpenApi();
 // Scoped => Her istek için aynı instance kullanılır. (Stateful)
 // Transient => Her istek geldiğinde yeni bir instance oluşturulur. (Stateless)
 
+// builder.Services.AddSingleton<CalculateService>();
+builder.Services.AddSingleton<ICalculateService, CalculateService>(); 
 
 var app = builder.Build();
 
