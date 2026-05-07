@@ -1,4 +1,6 @@
 using RestAprilEducation.Application.Products;
+using RestAprilEducation.Application.Products.GetList;
+using RestAprilEducation.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +20,9 @@ builder.Services.AddOpenApi();
 // Transient => Her istek geldiğinde yeni bir instance oluşturulur. (Stateless)
 
 // builder.Services.AddSingleton<CalculateService>();
-builder.Services.AddSingleton<ICalculateService, CalculateService>(); 
-
+builder.Services.AddSingleton<ICalculateService, CalculateService>();
+builder.Services.AddScoped<IProductsApplication, ProductsApplication>();
+builder.Services.AddScoped<IProductRepository, ProductRepositoryWithInMemory>();
 var app = builder.Build();
 
 

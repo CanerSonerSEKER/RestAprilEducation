@@ -2,7 +2,7 @@
 {
     public interface IProductsApplication
     {
-        Task<List<ProductDto>> GetAll();
+        Task<ApplicationResult<List<ProductDto>>> GetAll();
     }
 }
  

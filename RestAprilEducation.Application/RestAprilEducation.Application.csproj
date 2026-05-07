@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <ProjectReference Include="..\RestAprilEducation.Domain\RestAprilEducation.Domain.csproj" />
   </ItemGroup>
 
