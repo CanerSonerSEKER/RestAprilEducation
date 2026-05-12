@@ -18,7 +18,22 @@ namespace RestAprilEducation.Persistence
             throw new NotImplementedException();
         }
 
+        public Task<Product> DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<Product>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Product> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Product> UpdateAsync(Product product)
         {
             throw new NotImplementedException();
         }

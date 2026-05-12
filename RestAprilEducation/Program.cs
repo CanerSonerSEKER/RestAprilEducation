@@ -1,3 +1,4 @@
+using RestAprilEducation.API.Endpoints.Products;
 using RestAprilEducation.Application.Products;
 using RestAprilEducation.Application.Products.GetList;
 using RestAprilEducation.Persistence;
@@ -23,10 +24,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddSingleton<ICalculateService, CalculateService>();
 builder.Services.AddScoped<IProductsApplication, ProductsApplication>();
 builder.Services.AddScoped<IProductRepository, ProductRepositoryWithInMemory>();
+
+
 var app = builder.Build();
 
 
-
+app.AddProductEndpoints();
 
 
 

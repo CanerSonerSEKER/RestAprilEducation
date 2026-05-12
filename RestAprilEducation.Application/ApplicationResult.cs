@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Text.Json.Serialization;
 
 namespace RestAprilEducation.Application
 {
@@ -16,29 +18,40 @@ namespace RestAprilEducation.Application
 
         public bool IsSuccess => Problem == null;
 
+        // 200 OK
+        // 201 Created
+        // 204 No Content
+        [JsonIgnore]
+        public HttpStatusCode HttpStatusCode { get; set; }
+
+
+
         public static ApplicationResult  Success()
         {
             return new ApplicationResult();
         }
 
-        public static ApplicationResult Failure(ProblemDetails problem)
+        public static ApplicationResult Failure(ProblemDetails problem, HttpStatusCode status)
         {
             return new ApplicationResult()
             {
-                Problem = problem
+                Problem = problem,
+                HttpStatusCode = status
             };
         }
 
-        public static ApplicationResult Failure(string title, int status)
+        public static ApplicationResult Failure(string title, HttpStatusCode status)
         {
             return new ApplicationResult()
             {
                 Problem = new ProblemDetails()
                 {
                     Title = title,
-                    Status = status
-                }
-            };
+                    Status = status.GetHashCode()
+                },
+
+                HttpStatusCode = status
+            }; 
         }
 
 
@@ -49,31 +62,34 @@ namespace RestAprilEducation.Application
     {
         public T? Data { get; set; }
 
-        public new static ApplicationResult<T> Success(T data)
+        public new static ApplicationResult<T> Success(T data, HttpStatusCode status)
         {
             return new ApplicationResult<T>()
             {
-                Data = data
+                Data = data,
+                HttpStatusCode = status
             };
         }
 
-        public new static ApplicationResult<T> Failure(ProblemDetails problem)
+        public new static ApplicationResult<T> Failure(ProblemDetails problem, HttpStatusCode status )
         {
             return new ApplicationResult<T>()
             {
-                Problem = problem
+                Problem = problem,
+                HttpStatusCode = status
             };
         }
 
-        public new static ApplicationResult<T> Failure(string title, int status)
+        public new static ApplicationResult<T> Failure(string title, HttpStatusCode status)
         {
             return new ApplicationResult<T>()
             {
                 Problem = new ProblemDetails()
                 {
                     Title = title,
-                    Status = status
-                }
+                    Status = status.GetHashCode()
+                },
+                HttpStatusCode = status
             };
         }
 
