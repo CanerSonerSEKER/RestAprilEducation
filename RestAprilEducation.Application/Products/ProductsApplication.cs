@@ -1,5 +1,4 @@
 ﻿using RestAprilEducation.Application.Products.Create;
-using RestAprilEducation.Application.Products.Delete;
 using RestAprilEducation.Application.Products.GetList;
 using RestAprilEducation.Application.Products.Update;
 using RestAprilEducation.Domain;
@@ -24,6 +23,22 @@ namespace RestAprilEducation.Application.Products
 
             return ApplicationResult<List<ProductDto>>.Success(productAsDtoList, HttpStatusCode.OK);
         }
+
+
+        public async Task<ApplicationResult<ProductDto>> GetById(int id)
+        {
+            var product = await productRepository.GetByIdAsync(id);
+
+            if (product == null)
+            {
+                return ApplicationResult<ProductDto>.Failure("Product not found", HttpStatusCode.NotFound);
+            }
+
+            var productAsDto = new ProductDto(product.Id, product.Name, product.Price);
+
+            return ApplicationResult<ProductDto>.Success(productAsDto, HttpStatusCode.OK);
+        }
+
 
         public async Task<ApplicationResult<CreateProductResponse>> Create(CreateProductRequest productRequest)
         {

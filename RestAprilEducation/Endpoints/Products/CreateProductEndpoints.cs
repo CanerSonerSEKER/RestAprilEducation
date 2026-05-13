@@ -15,8 +15,6 @@ namespace RestAprilEducation.API.Endpoints.Products
             {
                 var products = await productApplication.Create(productRequest);
 
-
-
                 return Results.Ok(products);
                 
             });
