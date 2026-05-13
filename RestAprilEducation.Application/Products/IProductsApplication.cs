@@ -1,7 +1,8 @@
 ﻿using RestAprilEducation.Application.Products.Create;
+using RestAprilEducation.Application.Products.GetList;
 using RestAprilEducation.Application.Products.Update;
 
-namespace RestAprilEducation.Application.Products.GetList
+namespace RestAprilEducation.Application.Products
 {
     public interface IProductsApplication
     {
@@ -10,6 +11,8 @@ namespace RestAprilEducation.Application.Products.GetList
         Task<ApplicationResult<CreateProductResponse>> Create(CreateProductRequest createRequest);
         Task<ApplicationResult<UpdateProductResponse>> Update(int id, UpdateProductRequest updateRequest);
         Task<ApplicationResult> Delete(int id);
+
+        Task<ApplicationResult<List<ProductDto>>> GetAllWithPaged(int pageNumber, int pageSize);
     }
 }
  

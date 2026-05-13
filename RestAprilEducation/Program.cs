@@ -1,7 +1,7 @@
 using RestAprilEducation.API.Endpoints.Products;
 using RestAprilEducation.Application.Products;
-using RestAprilEducation.Application.Products.GetList;
 using RestAprilEducation.Persistence;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +37,7 @@ app.AddProductEndpoints();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();

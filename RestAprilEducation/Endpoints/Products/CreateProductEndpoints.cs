@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestAprilEducation.API.Extensions;
+using RestAprilEducation.Application.Products;
 using RestAprilEducation.Application.Products.Create;
-using RestAprilEducation.Application.Products.GetList;
-using System.Diagnostics;
 
 namespace RestAprilEducation.API.Endpoints.Products
 {
@@ -11,13 +11,9 @@ namespace RestAprilEducation.API.Endpoints.Products
         // api/products.. 
         public static RouteGroupBuilder AddCreateProductsEndpoints(this RouteGroupBuilder group)
         {
-            group.MapPost("/", async  ([FromBody]CreateProductRequest productRequest, [FromServices]IProductsApplication productApplication) => 
-            {
-                var products = await productApplication.Create(productRequest);
-
-                return Results.Ok(products);
-                
-            });
+            group.MapPost("/", 
+                async  ([FromBody]CreateProductRequest productRequest, [FromServices]IProductsApplication productApplication) =>
+                    (await productApplication.Create(productRequest)).ToResult());
 
             return group;
         }

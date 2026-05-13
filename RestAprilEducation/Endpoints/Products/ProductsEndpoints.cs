@@ -10,10 +10,13 @@
 
         public static void AddProductEndpoints(this WebApplication app)
         {
-            var productsGroup = app.MapGroup("/api/products");
-            productsGroup.AddCreateProductsEndpoints();
-            productsGroup.AddUpdateProductEndpoint();
-            // productsGroup.AddDeleteProductsEndpoints();
+            var productsGroup = app.MapGroup("/api/products")
+                .AddCreateProductsEndpoints()
+                .AddUpdateProductEndpoint()
+                .AddDeleteProductEndpoint()
+                .AddGetAllProductEndpoint()
+                .AddGetByIdProductEndpoint()
+                .AddGetAllWithPagedProductEndpoint();
         }
 
     }

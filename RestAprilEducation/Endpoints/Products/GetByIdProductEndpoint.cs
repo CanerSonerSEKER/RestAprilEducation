@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestAprilEducation.Application.Products.GetList;
+using RestAprilEducation.API.Extensions;
+using RestAprilEducation.Application.Products;
 
 namespace RestAprilEducation.API.Endpoints.Products
 {
@@ -8,18 +9,10 @@ namespace RestAprilEducation.API.Endpoints.Products
 
         public static RouteGroupBuilder AddGetByIdProductEndpoint(this RouteGroupBuilder group)
         {
-            group.MapGet("/{id}", async ([FromRoute] int id, [FromServices]IProductsApplication productApplication) =>
-            {
-                var product = await productApplication.GetById(id);
-
-                if (product == null)
-                {
-                    return Results.NotFound();
-                }
-
-                return Results.Ok(product);
-            });
-
+            group.MapGet("/{id}", 
+                async ([FromRoute] int id, [FromServices]IProductsApplication productApplication) =>
+                    (await productApplication.GetById(id)).ToResult());
+            
             return group;
         }
 

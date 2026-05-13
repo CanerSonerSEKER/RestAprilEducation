@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestAprilEducation.Application.Products.GetList;
+using RestAprilEducation.API.Extensions;
+using RestAprilEducation.Application.Products;
 
 namespace RestAprilEducation.API.Endpoints.Products
 {
@@ -9,14 +10,9 @@ namespace RestAprilEducation.API.Endpoints.Products
         public static RouteGroupBuilder AddDeleteProductEndpoint(this RouteGroupBuilder group)
         {
 
-            group.MapDelete("/{id}", async ([FromRoute] int id, [FromServices] IProductsApplication productApplication) =>
-            {
-
-                var result = await productApplication.Delete(id);
-
-                return Results.Ok();
-
-            });
+            group.MapDelete("/{id}", 
+                async ([FromRoute] int id, [FromServices] IProductsApplication productApplication) =>
+                    (await productApplication.Delete(id)).ToResult());
 
             return group;
 

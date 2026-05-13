@@ -16,5 +16,6 @@ namespace RestAprilEducation.Application.Products
 
         Task<bool> AnyAsync(string productName);
 
+        Task<List<Product>> GetAllWithPagedAsync(int pageNumber, int pageSize);
     }
 }

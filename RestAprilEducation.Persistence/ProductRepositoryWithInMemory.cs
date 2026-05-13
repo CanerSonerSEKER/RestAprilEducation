@@ -28,6 +28,11 @@ namespace RestAprilEducation.Persistence
             throw new NotImplementedException();
         }
 
+        public Task<List<Product>> GetAllWithPagedAsync(int pageNumber, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Product> GetByIdAsync(int id)
         {
             throw new NotImplementedException();

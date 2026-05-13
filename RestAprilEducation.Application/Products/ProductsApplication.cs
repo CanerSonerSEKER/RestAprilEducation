@@ -24,6 +24,22 @@ namespace RestAprilEducation.Application.Products
             return ApplicationResult<List<ProductDto>>.Success(productAsDtoList, HttpStatusCode.OK);
         }
 
+        public async Task<ApplicationResult<List<ProductDto>>> GetAllWithPaged(int pageNumber, int pageSize)
+        {
+            var productList = await productRepository.GetAllWithPagedAsync(pageNumber, pageSize);
+
+            var productAsDtoList = new List<ProductDto>();
+
+            foreach (var product in productList)
+            {
+                var productAsDto = new ProductDto(product.Id, product.Name, (product.Price + (product.Price * 0.18m)));
+
+                productAsDtoList.Add(productAsDto);
+            }
+
+            return ApplicationResult<List<ProductDto>>.Success(productAsDtoList, HttpStatusCode.OK);
+        }
+
 
         public async Task<ApplicationResult<ProductDto>> GetById(int id)
         {
