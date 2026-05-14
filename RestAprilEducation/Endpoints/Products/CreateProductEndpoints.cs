@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestAprilEducation.API.Extensions;
+using RestAprilEducation.Application;
 using RestAprilEducation.Application.Products;
 using RestAprilEducation.Application.Products.Create;
 
@@ -13,7 +14,8 @@ namespace RestAprilEducation.API.Endpoints.Products
         {
             group.MapPost("/", 
                 async  ([FromBody]CreateProductRequest productRequest, [FromServices]IProductsApplication productApplication) =>
-                    (await productApplication.Create(productRequest)).ToResult());
+                    (await productApplication.Create(productRequest)).ToResult())
+                .AddEndpointFilter<ValidatorFilter<CreateProductRequest>>();
 
             return group;
         }

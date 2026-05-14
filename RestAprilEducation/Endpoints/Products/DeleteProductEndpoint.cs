@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestAprilEducation.API.Extensions;
+using RestAprilEducation.Application;
 using RestAprilEducation.Application.Products;
 
 namespace RestAprilEducation.API.Endpoints.Products

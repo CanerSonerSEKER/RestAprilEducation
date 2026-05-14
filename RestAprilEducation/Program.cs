@@ -1,4 +1,6 @@
+using FluentValidation;
 using RestAprilEducation.API.Endpoints.Products;
+using RestAprilEducation.Application;
 using RestAprilEducation.Application.Products;
 using RestAprilEducation.Persistence;
 using Scalar.AspNetCore;
@@ -25,6 +27,7 @@ builder.Services.AddSingleton<ICalculateService, CalculateService>();
 builder.Services.AddScoped<IProductsApplication, ProductsApplication>();
 builder.Services.AddScoped<IProductRepository, ProductRepositoryWithInMemory>();
 
+builder.Services.AddValidatorsFromAssemblyContaining<ApplicationAssembly>();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
-﻿using RestAprilEducation.Application.Products.Create;
+﻿using FluentValidation;
+using RestAprilEducation.Application.Products.Create;
 using RestAprilEducation.Application.Products.GetList;
 using RestAprilEducation.Application.Products.Update;
 using RestAprilEducation.Domain;

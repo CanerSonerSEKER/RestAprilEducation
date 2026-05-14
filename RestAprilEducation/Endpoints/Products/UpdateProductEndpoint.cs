@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestAprilEducation.API.Extensions;
+using RestAprilEducation.Application;
 using RestAprilEducation.Application.Products;
 using RestAprilEducation.Application.Products.Update;
 
@@ -15,7 +16,8 @@ namespace RestAprilEducation.API.Endpoints.Products
 
             group.MapPut("/{id}", 
                 async ([FromRoute]int id, [FromBody]UpdateProductRequest updateProductRequest, [FromServices]IProductsApplication productApplication) => 
-                    (await productApplication.Update(id, updateProductRequest)).ToResult());
+                    (await productApplication.Update(id, updateProductRequest)).ToResult())
+                .AddEndpointFilter<ValidatorFilter<UpdateProductRequest>>();
 
             return group;
 
