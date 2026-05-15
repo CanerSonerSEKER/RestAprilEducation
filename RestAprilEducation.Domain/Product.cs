@@ -10,7 +10,31 @@ namespace RestAprilEducation.Domain
 
         public string Name { get; set; } = null!;
 
-        public decimal Price { get; set; }
+
+        // field burada price değişkenini tutar, property ise bu değişkene erişimi kontrol eder.
+        public decimal Price
+        {
+            get => field;
+            set
+            {
+                if (value < 1 || value > 1000)
+                {
+                    throw new Exception("Price must be between 1 to 1000");
+                }
+                field = value;
+            }
+
+        }
+
+        //public void SetPrice(decimal price)
+        //{
+        //    if (price < 1 || price > 1000)
+        //    {
+        //        throw new Exception("Price must be between 1 to 1000");
+        //    }
+        //    Price = price;
+        //}
+
 
         public string Barcode { get; set; } = null!; 
 

@@ -1,3 +1,6 @@
+VALIDATION
+
+
 1.Level  => Client(Validation) 
 
 2.Level => Server(Validation)
@@ -6,8 +9,5 @@
 3.Level => Application Code Validation 
 
 4.Level => Database Validation
-
-
-
 
 
