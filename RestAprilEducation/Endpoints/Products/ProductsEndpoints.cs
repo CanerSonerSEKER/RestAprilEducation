@@ -1,4 +1,6 @@
-﻿namespace RestAprilEducation.API.Endpoints.Products
+﻿using Asp.Versioning.Builder;
+
+namespace RestAprilEducation.API.Endpoints.Products
 {
     public static class ProductsEndpoints
     {
@@ -8,9 +10,10 @@
         // body
         // header
 
-        public static void AddProductEndpoints(this WebApplication app)
+        public static void AddProductEndpoints(this WebApplication app, ApiVersionSet apiVersionSet)
         {
-            var productsGroup = app.MapGroup("/api/products")
+            // route constraint => /api/products/{id:int} => id'nin integer olduğunu belirtiriz. Böylece string bir id gelirse 404 döner.
+            var productsGroup = app.MapGroup("/api/v{version:apiVersion}/products").WithApiVersionSet(apiVersionSet)
                 .AddCreateProductsEndpoints()
                 .AddUpdateProductEndpoint()
                 .AddDeleteProductEndpoint()

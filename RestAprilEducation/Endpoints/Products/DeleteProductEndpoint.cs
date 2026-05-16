@@ -11,9 +11,9 @@ namespace RestAprilEducation.API.Endpoints.Products
         public static RouteGroupBuilder AddDeleteProductEndpoint(this RouteGroupBuilder group)
         {
 
-            group.MapDelete("/{id}", 
+            group.MapDelete("/{id:int}", 
                 async ([FromRoute] int id, [FromServices] IProductsApplication productApplication) =>
-                    (await productApplication.Delete(id)).ToResult());
+                    (await productApplication.Delete(id)).ToResult()).MapToApiVersion(1,0);
 
             return group;
 

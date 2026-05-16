@@ -15,7 +15,7 @@ namespace RestAprilEducation.API.Endpoints.Products
             group.MapPost("/", 
                 async  ([FromBody]CreateProductRequest productRequest, [FromServices]IProductsApplication productApplication) =>
                     (await productApplication.Create(productRequest)).ToResult())
-                .AddEndpointFilter<ValidatorFilter<CreateProductRequest>>();
+                .AddEndpointFilter<ValidatorFilter<CreateProductRequest>>().MapToApiVersion(1,0);
 
             return group;
         }

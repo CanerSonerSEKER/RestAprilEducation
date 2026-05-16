@@ -14,10 +14,10 @@ namespace RestAprilEducation.API.Endpoints.Products
         public static RouteGroupBuilder AddUpdateProductEndpoint(this RouteGroupBuilder group)
         {
 
-            group.MapPut("/{id}", 
+            group.MapPut("/{id:int}", 
                 async ([FromRoute]int id, [FromBody]UpdateProductRequest updateProductRequest, [FromServices]IProductsApplication productApplication) => 
                     (await productApplication.Update(id, updateProductRequest)).ToResult())
-                .AddEndpointFilter<ValidatorFilter<UpdateProductRequest>>();
+                .AddEndpointFilter<ValidatorFilter<UpdateProductRequest>>().MapToApiVersion(1, 0);
 
             return group;
 

@@ -8,6 +8,6 @@ VALIDATION
 	- Fluent Validation (hem sync hem de async validation)
 3.Level => Application Code Validation 
 
-4.Level => Database Validation
+4.Level => Database Validation(EF CORE)
 
 

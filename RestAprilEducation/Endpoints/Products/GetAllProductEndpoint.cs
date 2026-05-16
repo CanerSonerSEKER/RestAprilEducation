@@ -12,7 +12,7 @@ namespace RestAprilEducation.API.Endpoints.Products
         {
             group.MapGet("/", 
                 async ([FromServices]IProductsApplication productApplication) => 
-                    (await productApplication.GetAll()).ToResult());
+                    (await productApplication.GetAll()).ToResult()).MapToApiVersion(1, 0);
 
             return group;
         }

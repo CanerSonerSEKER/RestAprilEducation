@@ -1,5 +1,6 @@
 using FluentValidation;
 using RestAprilEducation.API.Endpoints.Products;
+using RestAprilEducation.API.Extensions;
 using RestAprilEducation.Application;
 using RestAprilEducation.Application.Products;
 using RestAprilEducation.Persistence;
@@ -28,11 +29,12 @@ builder.Services.AddScoped<IProductsApplication, ProductsApplication>();
 builder.Services.AddScoped<IProductRepository, ProductRepositoryWithInMemory>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<ApplicationAssembly>();
+builder.Services.AddVersioningExt();
 
 var app = builder.Build();
 
-
-app.AddProductEndpoints();
+app.AddProductEndpoints(app.AddApiVersionSetExt());
+app.AddApiVersionSetExt();
 
 
 
