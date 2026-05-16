@@ -4,6 +4,9 @@ using RestAprilEducation.API.Extensions;
 using RestAprilEducation.Application;
 using RestAprilEducation.Application.Products;
 using RestAprilEducation.Persistence;
+using System.Linq;
+using System.Reflection;
+using RestAprilEducation.Persistence;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +33,9 @@ builder.Services.AddScoped<IProductRepository, ProductRepositoryWithInMemory>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<ApplicationAssembly>();
 builder.Services.AddVersioningExt();
+
+// Register repository implementations from Persistence assembly
+//builder.Services.AddPersistenceRepositories();
 
 var app = builder.Build();
 

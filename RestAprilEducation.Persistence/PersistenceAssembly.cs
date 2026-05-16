@@ -1,5 +1,6 @@
 ﻿
 namespace RestAprilEducation.Persistence
 {
-    public class PersistenceAssembly;
+    // Marker class used for assembly scanning
+    public static class PersistenceAssembly { }
 }

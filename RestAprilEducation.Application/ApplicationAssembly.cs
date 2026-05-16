@@ -4,5 +4,6 @@ using System.Text;
 
 namespace RestAprilEducation.Application
 {
-    public class ApplicationAssembly;
+    // Marker class used for assembly scanning
+    public class ApplicationAssembly { }
 }
