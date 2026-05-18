@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using RestAprilEducation.Persistence;
 using Scalar.AspNetCore;
+using RestAprilEducation.API.Endpoints.Versioning;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,9 +41,7 @@ builder.Services.AddVersioningExt();
 var app = builder.Build();
 
 app.AddProductEndpoints(app.AddApiVersionSetExt());
-app.AddApiVersionSetExt();
-
-
+app.AddVersionExampleEndpoint(app.AddApiVersionSetExt());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

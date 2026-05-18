@@ -4,7 +4,7 @@ using RestAprilEducation.Application;
 using RestAprilEducation.Application.Products;
 using RestAprilEducation.Application.Products.Create;
 
-namespace RestAprilEducation.API.Endpoints.Products
+namespace RestAprilEducation.API.Endpoints.Products.Create.V2
 {
     public static class CreateProductEndpoints
     {
@@ -22,3 +22,4 @@ namespace RestAprilEducation.API.Endpoints.Products
 
     }
 }
+ 
