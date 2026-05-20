@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestAprilEducation.Domain.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,7 +20,10 @@ namespace RestAprilEducation.Domain
             {
                 if (value < 1 || value > 1000)
                 {
-                    throw new Exception("Price must be between 1 to 1000");
+                    throw new BusinessException("Price must be between 1 to 1000")
+                    {
+                        ErrorDetail = $"Invalid price: {value}"
+                    };
                 }
                 field = value;
             }

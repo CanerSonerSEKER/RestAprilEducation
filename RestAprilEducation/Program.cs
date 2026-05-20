@@ -9,6 +9,7 @@ using System.Reflection;
 using RestAprilEducation.Persistence;
 using Scalar.AspNetCore;
 using RestAprilEducation.API.Endpoints.Versioning;
+using RestAprilEducation.API.ExceptionHandlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,11 @@ builder.Services.AddVersioningExt();
 
 // Register repository implementations from Persistence assembly
 //builder.Services.AddPersistenceRepositories();
+
+builder.Services.AddExceptionHandler<UserFriendlyExceptionHandler>()
+    .AddExceptionHandler<BusinessExceptionHandler>()
+    .AddExceptionHandler<GlobalExceptionHandler>();
+
 
 var app = builder.Build();
 
