@@ -10,6 +10,7 @@ using RestAprilEducation.Persistence;
 using Scalar.AspNetCore;
 using RestAprilEducation.API.Endpoints.Versioning;
 using RestAprilEducation.API.ExceptionHandlers;
+using RestAprilEducation.API.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,8 +47,14 @@ builder.Services.AddExceptionHandler<UserFriendlyExceptionHandler>()
 
 var app = builder.Build();
 
+app.UseExceptionHandler((options) => 
+{
+});
+
 app.AddProductEndpoints(app.AddApiVersionSetExt());
 app.AddVersionExampleEndpoint(app.AddApiVersionSetExt());
+
+app.AddExceptionHandlerExampleEndpoint();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
