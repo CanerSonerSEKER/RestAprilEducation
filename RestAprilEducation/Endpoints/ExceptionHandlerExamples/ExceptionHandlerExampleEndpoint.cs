@@ -15,7 +15,7 @@ namespace RestAprilEducation.API.Endpoints
             {
                 // throw new Exception("Veri tabanı bağlantı hatası.");
 
-                throw new UserFriendlyException("UserFriendlyException error");
+                // throw new UserFriendlyException("UserFriendlyException error");
 
                // throw new BusinessException("business logic error");
 

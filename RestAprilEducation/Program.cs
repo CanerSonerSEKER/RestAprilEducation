@@ -4,15 +4,14 @@ using RestAprilEducation.API.Extensions;
 using RestAprilEducation.Application;
 using RestAprilEducation.Application.Products;
 using RestAprilEducation.Persistence;
-using System.Linq;
-using System.Reflection;
-using RestAprilEducation.Persistence;
 using Scalar.AspNetCore;
 using RestAprilEducation.API.Endpoints.Versioning;
 using RestAprilEducation.API.ExceptionHandlers;
 using RestAprilEducation.API.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 // Add services to the container.
 
@@ -46,6 +45,8 @@ builder.Services.AddExceptionHandler<UserFriendlyExceptionHandler>()
 
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 app.UseExceptionHandler((options) => 
 {

@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+﻿using Microsoft.Extensions.Logging;
 using RestAprilEducation.Application.Products.Create;
 using RestAprilEducation.Application.Products.GetList;
 using RestAprilEducation.Application.Products.Update;
@@ -7,10 +7,23 @@ using System.Net;
 
 namespace RestAprilEducation.Application.Products
 {
-    public class ProductsApplication(IProductRepository productRepository) : IProductsApplication
+    public class ProductsApplication(IProductRepository productRepository, ILogger<ProductsApplication> logger, ILoggerFactory loggerFactory) : IProductsApplication
     {
         public async Task<ApplicationResult<List<ProductDto>>> GetAll()
         {
+            // Trace
+            // Debug
+            // Information
+            // Warning
+            // Error
+            // Critical
+
+            logger.LogInformation("Get all methodu çalıştı.");
+
+            var loggerFromFactory = loggerFactory.CreateLogger("ProductsApplicationLogger");
+            loggerFromFactory.LogInformation("Get all methodu çalıştı.");
+
+
             var productList = await productRepository.GetAll();
 
             var productAsDtoList = new List<ProductDto>();
