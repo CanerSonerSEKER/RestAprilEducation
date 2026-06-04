@@ -2,7 +2,7 @@
 
 namespace RestAprilEducation.API.Metrics
 {
-    public sealed class AppMetrics : IDisposable
+    public sealed class AppMetrics
     {
 
         public const string MeterName = "RestAprilEducation.API";
@@ -42,11 +42,6 @@ namespace RestAprilEducation.API.Metrics
                 unit: "{connection}",
                 description: "Anlık aktif bağlantı sayısı"
                 );
-        }
-
-        public void Dispose()
-        {
-            _meter.Dispose();
         }
     }
 }
