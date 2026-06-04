@@ -8,6 +8,8 @@ using Scalar.AspNetCore;
 using RestAprilEducation.API.Endpoints.Versioning;
 using RestAprilEducation.API.ExceptionHandlers;
 using RestAprilEducation.API.Endpoints;
+using RestAprilEducation.API.Metrics;
+using RestAprilEducation.API.Endpoints.Metrics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,7 @@ builder.Services.AddScoped<IProductsApplication, ProductsApplication>();
 builder.Services.AddScoped<IProductRepository, ProductRepositoryWithInMemory>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<ApplicationAssembly>();
+builder.Services.AddSingleton<AppMetrics>();
 builder.Services.AddVersioningExt();
 
 // Register repository implementations from Persistence assembly
@@ -56,6 +59,7 @@ app.AddProductEndpoints(app.AddApiVersionSetExt());
 app.AddVersionExampleEndpoint(app.AddApiVersionSetExt());
 
 app.AddExceptionHandlerExampleEndpoint();
+app.AddMetricEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
