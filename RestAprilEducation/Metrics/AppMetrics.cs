@@ -16,8 +16,7 @@ namespace RestAprilEducation.API.Metrics
         /// Her çağrıda yalnızca arttırılabilir. Hiçbir zaman azalmaz.
         /// Örnek kullanım: Toplam sipariş sayısı, toplam istek sayısı.
         /// </summary>
-        public Counter<long> OrdersCreated { get; }
-
+        public Counter<int> OrdersCreated { get; }
 
         /// <summary>
         /// Hem artabilen hem azalabilen metric(UpDownCounter)
@@ -30,15 +29,15 @@ namespace RestAprilEducation.API.Metrics
         {
             _meter = new Meter(MeterName);
 
-            OrdersCreated = _meter.CreateCounter<long>(
-                name: "orders.created",
+            OrdersCreated = _meter.CreateCounter<int>(
+                name: "orders.created5",
                 unit: "{order}",
                 description: "Şimdiye kadar oluşturulan toplam sipariş sayısı"
                 );
 
 
             ActiveConnections = _meter.CreateUpDownCounter<int>(
-                name: "active.connections",
+                name: "active.connections5",
                 unit: "{connection}",
                 description: "Anlık aktif bağlantı sayısı"
                 );

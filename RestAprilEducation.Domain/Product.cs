@@ -13,22 +13,22 @@ namespace RestAprilEducation.Domain
 
 
         // field burada price değişkenini tutar, property ise bu değişkene erişimi kontrol eder.
-        public decimal Price
-        {
-            get => field;
-            set
-            {
-                if (value < 1 || value > 1000)
-                {
-                    throw new BusinessException("Price must be between 1 to 1000")
-                    {
-                        ErrorDetail = $"Invalid price: {value}"
-                    };
-                }
-                field = value;
-            }
+        public decimal Price { get; set; }
+        //{ Burada da validasyon yapılabiliyor diye göstermek için yaptık.
+        //    get => field;
+        //    set
+        //    {
+        //        if (value < 1 || value > 1000)
+        //        {
+        //            throw new BusinessException("Price must be between 1 to 1000")
+        //            {
+        //                ErrorDetail = $"Invalid price: {value}"
+        //            };
+        //        }
+        //        field = value;
+        //    }
 
-        }
+        //}
 
         //public void SetPrice(decimal price)
         //{

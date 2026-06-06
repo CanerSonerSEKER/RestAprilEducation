@@ -10,6 +10,7 @@ using RestAprilEducation.API.ExceptionHandlers;
 using RestAprilEducation.API.Endpoints;
 using RestAprilEducation.API.Metrics;
 using RestAprilEducation.API.Endpoints.Metrics;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +34,7 @@ builder.Services.AddOpenApi();
 // builder.Services.AddSingleton<CalculateService>();
 builder.Services.AddSingleton<ICalculateService, CalculateService>();
 builder.Services.AddScoped<IProductsApplication, ProductsApplication>();
-builder.Services.AddScoped<IProductRepository, ProductRepositoryWithInMemory>();
+builder.Services.AddPersistenceExt(builder.Configuration);
 
 builder.Services.AddValidatorsFromAssemblyContaining<ApplicationAssembly>();
 builder.Services.AddSingleton<AppMetrics>();
