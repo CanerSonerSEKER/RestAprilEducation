@@ -10,7 +10,7 @@ namespace RestAprilEducation.Persistence
     {
 
         public DbSet<Product> Products { get; set; }
-
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,6 +30,12 @@ namespace RestAprilEducation.Persistence
                 p.ToTable("products");
 
             });
+
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Products)
+                .WithOne(p => p.Category)
+                .HasForeignKey(p => p.CategoryId);
+
 
             base.OnModelCreating(modelBuilder);
         }

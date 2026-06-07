@@ -1,6 +1,7 @@
 ﻿using RestAprilEducation.Domain.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace RestAprilEducation.Domain
@@ -40,7 +41,12 @@ namespace RestAprilEducation.Domain
         //}
 
 
-        public string Barcode { get; set; } = null!; 
+        public string Barcode { get; set; } = null!;
+
+
+        public int CategoryId { get; set; }
+
+        public Category Category { get; set; } = null!;
 
     }
 }

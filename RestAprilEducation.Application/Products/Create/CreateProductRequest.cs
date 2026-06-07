@@ -10,5 +10,5 @@ namespace RestAprilEducation.Application.Products.Create
         string Name, 
         //[Range(1,1000, ErrorMessage = "Price must be between 1 and 100")]
         //[Required]
-        decimal Price);
+        decimal Price, int CategoryId);
 }

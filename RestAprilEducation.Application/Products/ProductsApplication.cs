@@ -11,20 +11,14 @@ namespace RestAprilEducation.Application.Products
     {
         public async Task<ApplicationResult<List<ProductDto>>> GetAll()
         {
-            // Trace
-            // Debug
-            // Information
-            // Warning
-            // Error
-            // Critical
-
+            
             logger.LogInformation("Get all methodu çalıştı.");
 
             var loggerFromFactory = loggerFactory.CreateLogger("ProductsApplicationLogger");
             loggerFromFactory.LogInformation("Get all methodu çalıştı.");
 
 
-            var productList = await productRepository.GetAll();
+            var productList = await productRepository.GetAllAsync();
 
             var productAsDtoList = new List<ProductDto>();
 
@@ -79,7 +73,7 @@ namespace RestAprilEducation.Application.Products
             // This allows us to handle errors more gracefully and avoid using exceptions for control flow.
             // Hem başarılı durumu hem de hata durumunu tek bir nesne üzerinden yönetebiliriz. Bu, kodun okunabilirliğini artırır ve hata yönetimini daha etkili hale getirir.
 
-            if (hasProducts)
+            if (hasProducts is not null)
             {
                 return ApplicationResult<CreateProductResponse>.Failure("Product already exists", HttpStatusCode.BadRequest);
             }
@@ -90,12 +84,13 @@ namespace RestAprilEducation.Application.Products
             {
                 Name = productRequest.Name,
                 Price = productRequest.Price,
-                Barcode = barcode
+                Barcode = barcode,
+                CategoryId = productRequest.CategoryId
             };
 
-            var createdProduct = await productRepository.CreateAsync(product);
+            await productRepository.AddAsync(product);
 
-            return ApplicationResult<CreateProductResponse>.Success(new CreateProductResponse(createdProduct.Id), HttpStatusCode.Created);
+            return ApplicationResult<CreateProductResponse>.Success(new CreateProductResponse(product.Id), HttpStatusCode.Created);
         }
 
         public async Task<ApplicationResult<UpdateProductResponse>> Update(int id, UpdateProductRequest updateRequest)
@@ -109,7 +104,7 @@ namespace RestAprilEducation.Application.Products
 
             var hasProductWithSameName = await productRepository.AnyAsync(updateRequest.Name);
 
-            if (hasProductWithSameName && product.Name != updateRequest.Name)
+            if (hasProductWithSameName != null && product.Name != updateRequest.Name)
             {
                 return ApplicationResult<UpdateProductResponse>.Failure("Product with the same name already exists", HttpStatusCode.BadRequest);
             }
@@ -117,9 +112,9 @@ namespace RestAprilEducation.Application.Products
             product.Name = updateRequest.Name;
             product.Price = updateRequest.Price;
 
-            var updatedRequest = await productRepository.UpdateAsync(product);
+            await productRepository.UpdateAsync(product);
 
-            return ApplicationResult<UpdateProductResponse>.Success(new UpdateProductResponse(updatedRequest.Id), HttpStatusCode.OK);
+            return ApplicationResult<UpdateProductResponse>.Success(new UpdateProductResponse(product.Id), HttpStatusCode.OK);
 
         }
 
@@ -132,7 +127,7 @@ namespace RestAprilEducation.Application.Products
                 return ApplicationResult.Failure("Product not found", HttpStatusCode.NotFound);
             }
 
-            await productRepository.DeleteAsync(id);
+            await productRepository.DeleteAsync(product);
 
             return ApplicationResult.Success();
         }

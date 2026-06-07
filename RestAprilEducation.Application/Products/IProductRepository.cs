@@ -2,20 +2,11 @@
 
 namespace RestAprilEducation.Application.Products
 {
-    public interface IProductRepository
+    public interface IProductRepository : IGenericRepository<Product>
     {
-        Task<List<Product>> GetAll();
-
-        Task<Product> GetByIdAsync(int id);
-
-        Task<Product> CreateAsync(Product product);
-
-        Task<Product> UpdateAsync(Product product);
-
-        Task<Product> DeleteAsync(int id);
-
-        Task<bool> AnyAsync(string productName);
 
         Task<List<Product>> GetAllWithPagedAsync(int pageNumber, int pageSize);
+
+        Task<Product?> AnyAsync(string name);
     }
 }

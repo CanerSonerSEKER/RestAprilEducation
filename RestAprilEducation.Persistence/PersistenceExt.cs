@@ -41,7 +41,7 @@ namespace RestAprilEducation.Persistence
 
             }
 
-            services.AddScoped<IProductRepository, ProductRepositoryWithInMemory>();
+            // services.AddScoped<IProductRepository, ProductRepositoryWithInMemory>();
         }
 
 
