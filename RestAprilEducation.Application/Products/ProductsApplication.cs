@@ -7,7 +7,11 @@ using System.Net;
 
 namespace RestAprilEducation.Application.Products
 {
-    public class ProductsApplication(IProductRepository productRepository, ILogger<ProductsApplication> logger, ILoggerFactory loggerFactory) : IProductsApplication
+    public class ProductsApplication(
+        IProductRepository productRepository, 
+        ILogger<ProductsApplication> logger, 
+        ILoggerFactory loggerFactory,
+        IUnitOfWork unitOfWork) : IProductsApplication
     {
         public async Task<ApplicationResult<List<ProductDto>>> GetAll()
         {
@@ -89,6 +93,8 @@ namespace RestAprilEducation.Application.Products
             };
 
             await productRepository.AddAsync(product);
+            // Veri tabanına yansıtma işlemini yapıyoruz.
+            await unitOfWork.CommitAsync();
 
             return ApplicationResult<CreateProductResponse>.Success(new CreateProductResponse(product.Id), HttpStatusCode.Created);
         }
@@ -113,6 +119,7 @@ namespace RestAprilEducation.Application.Products
             product.Price = updateRequest.Price;
 
             await productRepository.UpdateAsync(product);
+            await unitOfWork.CommitAsync();
 
             return ApplicationResult<UpdateProductResponse>.Success(new UpdateProductResponse(product.Id), HttpStatusCode.OK);
 
@@ -128,6 +135,8 @@ namespace RestAprilEducation.Application.Products
             }
 
             await productRepository.DeleteAsync(product);
+
+            await unitOfWork.CommitAsync();
 
             return ApplicationResult.Success();
         }

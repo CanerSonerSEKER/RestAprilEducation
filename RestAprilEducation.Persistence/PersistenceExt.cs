@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RestAprilEducation.Application;
 using RestAprilEducation.Application.Products;
 
 namespace RestAprilEducation.Persistence
@@ -40,6 +41,8 @@ namespace RestAprilEducation.Persistence
                 }
 
             }
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>(); 
 
             // services.AddScoped<IProductRepository, ProductRepositoryWithInMemory>();
         }
