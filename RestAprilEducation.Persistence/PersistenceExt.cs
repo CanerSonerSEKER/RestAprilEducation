@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RestAprilEducation.Application;
 using RestAprilEducation.Application.Products;
+using RestAprilEducation.Domain;
 
 namespace RestAprilEducation.Persistence
 {
@@ -23,6 +24,8 @@ namespace RestAprilEducation.Persistence
 
                 });
             });
+
+            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<AppDbContext>();
 
             var applicationAssembly = typeof(Application.ApplicationAssembly).Assembly;
             var persistenceAssembly = typeof(PersistenceAssembly).Assembly;
