@@ -7,7 +7,9 @@ namespace RestAprilEducation.Domain
 {
     public class AppUser  : IdentityUser<Guid>
     {
-
+         
         public string? City { get; set; }
+
+        public UserDetails UserDetails { get; set; }
     }
 }

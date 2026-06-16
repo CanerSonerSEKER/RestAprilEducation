@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestAprilEducation.Persistence;
 
@@ -11,9 +12,11 @@ using RestAprilEducation.Persistence;
 namespace RestAprilEducation.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260616144200_add_identity")]
+    partial class add_identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,20 +276,6 @@ namespace RestAprilEducation.Persistence.Migrations
                     b.ToTable("products", (string)null);
                 });
 
-            modelBuilder.Entity("RestAprilEducation.Domain.UserDetails", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("UserDetails");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("RestAprilEducation.Domain.AppRole", null)
@@ -347,23 +336,6 @@ namespace RestAprilEducation.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("RestAprilEducation.Domain.UserDetails", b =>
-                {
-                    b.HasOne("RestAprilEducation.Domain.AppUser", "AppUser")
-                        .WithOne("UserDetails")
-                        .HasForeignKey("RestAprilEducation.Domain.UserDetails", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-                });
-
-            modelBuilder.Entity("RestAprilEducation.Domain.AppUser", b =>
-                {
-                    b.Navigation("UserDetails")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("RestAprilEducation.Domain.Category", b =>

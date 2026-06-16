@@ -25,6 +25,13 @@ namespace RestAprilEducation.Persistence
                 });
             });
 
+
+            // UserManager<AppUser> => User ile ilgili işlemleri yapar. (kullanıcı oluşturma, silme, güncelleme, şifre yönetimi vb.)
+            // RoleManager<AppRole> => Role ile ilgili işlemleri yapar. (rol oluşturma, silme, güncelleme vb.)
+            // SignInManager<AppUser> => Kullanıcıların oturum açma işlemlerini yönetir. (giriş yapma, çıkış yapma, oturum doğrulama vb.)
+            // Identity yi DI container a eklerken, AddIdentity metodu ile AppUser ve AppRole sınıflarını belirtiriz. Bu, Identity'nin bu sınıfları kullanarak kullanıcı ve rol yönetimini yapmasını sağlar.
+            // Ayrıca, AddEntityFrameworkStores<AppDbContext>() metodu ile Identity'nin AppDbContext'i kullanarak AppUser ve AppRole sınıflarını yönetmesini sağlar.
+            // Bu kod Identity'nin AppDbContext'i kullanarak AppUser ve AppRole sınıflarını yönetmesini sağlar.
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<AppDbContext>();
 
             var applicationAssembly = typeof(Application.ApplicationAssembly).Assembly;
