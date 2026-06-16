@@ -1,0 +1,5 @@
+﻿
+namespace RestAprilEducation.Application.Users.Login
+{
+    public record LoginRequest(string Email, string Password);
+}
