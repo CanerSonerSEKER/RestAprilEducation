@@ -11,6 +11,7 @@ using RestAprilEducation.API.Endpoints;
 using RestAprilEducation.API.Metrics;
 using RestAprilEducation.API.Endpoints.Metrics;
 using Microsoft.EntityFrameworkCore;
+using RestAprilEducation.API.Endpoints.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddOpenApi();
 // builder.Services.AddSingleton<CalculateService>();
 builder.Services.AddSingleton<ICalculateService, CalculateService>();
 builder.Services.AddScoped<IProductsApplication, ProductsApplication>();
+builder.Services.AddScoped<UserApplication>();
 builder.Services.AddPersistenceExt(builder.Configuration);
 
 builder.Services.AddValidatorsFromAssemblyContaining<ApplicationAssembly>();
@@ -61,6 +63,7 @@ app.AddVersionExampleEndpoint(app.AddApiVersionSetExt());
 
 app.AddExceptionHandlerExampleEndpoint();
 app.AddMetricEndpoints();
+app.AddUserEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
