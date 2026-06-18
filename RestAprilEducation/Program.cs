@@ -12,6 +12,9 @@ using RestAprilEducation.API.Metrics;
 using RestAprilEducation.API.Endpoints.Metrics;
 using Microsoft.EntityFrameworkCore;
 using RestAprilEducation.API.Endpoints.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +51,49 @@ builder.Services.AddVersioningExt();
 builder.Services.AddExceptionHandler<UserFriendlyExceptionHandler>()
     .AddExceptionHandler<BusinessExceptionHandler>()
     .AddExceptionHandler<GlobalExceptionHandler>();
+
+// İki tür authorization vardır => 
+// Role based authorization policies
+// Claims based authorization policies
+
+var jwtSection = builder.Configuration.GetSection("Jwt");
+builder.Services.AddAuthentication(configure => 
+    {
+        // Default olarak hangi authentication şemasını kullanacağımızı belirtiyoruz.
+        configure.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+
+        // Bir istek geldiğinde hangi authentication şemasını kullanarak authenticate edeceğimizi belirtiyoruz.
+        configure.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+    })
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSection["Issuer"],
+            ValidAudience = jwtSection["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection["SecretKey"]!))
+        };
+    })
+    .AddJwtBearer("branch-schema", options => 
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSection["Issuer"],
+            ValidAudience = jwtSection["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection["SecretKey"]!))
+        };
+    });
+builder.Services.AddAuthorization();
+
 
 
 var app = builder.Build();

@@ -9,6 +9,8 @@ namespace RestAprilEducation.Domain
     {
          
         public string? City { get; set; }
+        
+        public DateTime BirthDate { get; set; }
 
         public UserDetails UserDetails { get; set; }
     }
