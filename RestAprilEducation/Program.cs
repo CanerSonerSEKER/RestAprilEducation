@@ -92,7 +92,33 @@ builder.Services.AddAuthentication(configure =>
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection["SecretKey"]!))
         };
     });
-builder.Services.AddAuthorization();
+
+builder.Services.AddAuthorization(options => 
+{
+    // Role based authorization policy ekleyelim
+    options.AddPolicy("editor-role-policy", configurePolicy =>
+    {
+        configurePolicy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+
+        configurePolicy.RequireRole("editor");
+
+    });
+
+    // Claim based authorization policy ekleyelim
+    options.AddPolicy("city-policy", configurePolicy =>
+    {
+        configurePolicy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+
+        configurePolicy.RequireClaim("city", "Istanbul");
+    });
+
+
+    options.AddPolicy("branch-policy", configurePolicy =>
+    {
+        configurePolicy.AuthenticationSchemes.Add("branch-schema");
+        configurePolicy.RequireClaim("branch-id");
+    });
+});
 
 
 

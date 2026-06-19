@@ -12,7 +12,8 @@ namespace RestAprilEducation.API.Endpoints.Products
         {
             group.MapGet("/", 
                 async ([FromServices]IProductsApplication productApplication) => 
-                    (await productApplication.GetAll()).ToResult()).MapToApiVersion(1, 0);
+                    (await productApplication.GetAll()).ToResult()).MapToApiVersion(1, 0)
+                    .RequireAuthorization("city-policy");
 
             return group;
         }
