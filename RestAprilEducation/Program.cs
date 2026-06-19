@@ -15,6 +15,8 @@ using RestAprilEducation.API.Endpoints.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using RestAprilEducation.API.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -93,6 +95,8 @@ builder.Services.AddAuthentication(configure =>
         };
     });
 
+builder.Services.AddSingleton<IAuthorizationHandler, MinimumAgeHandler>();
+
 builder.Services.AddAuthorization(options => 
 {
     // Role based authorization policy ekleyelim
@@ -110,6 +114,12 @@ builder.Services.AddAuthorization(options =>
         configurePolicy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
 
         configurePolicy.RequireClaim("city", "Istanbul");
+    });
+
+    options.AddPolicy("min-age-policy", configurePolicy =>
+    {
+        configurePolicy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+        configurePolicy.AddRequirements(new MinimumAgeRequirement(minimumAge: 18));
     });
 
 
