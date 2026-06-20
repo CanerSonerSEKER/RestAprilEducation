@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using RestAprilEducation.Application.Products.Create;
 using RestAprilEducation.Application.Products.GetList;
 using RestAprilEducation.Application.Products.Update;
 using RestAprilEducation.Domain;
 using System.Net;
+using System.Security.Claims;
 
 namespace RestAprilEducation.Application.Products
 {
@@ -11,11 +13,15 @@ namespace RestAprilEducation.Application.Products
         IProductRepository productRepository, 
         ILogger<ProductsApplication> logger, 
         ILoggerFactory loggerFactory,
-        IUnitOfWork unitOfWork) : IProductsApplication
+        IUnitOfWork unitOfWork, 
+        IHttpContextAccessor httpContextAccessor) : IProductsApplication
     {
         public async Task<ApplicationResult<List<ProductDto>>> GetAll()
         {
-            
+
+            var userId = httpContextAccessor.HttpContext.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier);
+
+
             logger.LogInformation("Get all methodu çalıştı.");
 
             var loggerFromFactory = loggerFactory.CreateLogger("ProductsApplicationLogger");

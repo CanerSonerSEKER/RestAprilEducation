@@ -13,7 +13,8 @@ namespace RestAprilEducation.API.Endpoints.Products
 
             group.MapDelete("/{id:int}", 
                 async ([FromRoute] int id, [FromServices] IProductsApplication productApplication) =>
-                    (await productApplication.Delete(id)).ToResult()).MapToApiVersion(1,0);
+                    (await productApplication.Delete(id)).ToResult()).MapToApiVersion(1,0)
+                    .RequireRateLimiting("fixed-window-limiter");
 
             return group;
 

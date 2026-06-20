@@ -10,15 +10,96 @@ using RestAprilEducation.API.ExceptionHandlers;
 using RestAprilEducation.API.Endpoints;
 using RestAprilEducation.API.Metrics;
 using RestAprilEducation.API.Endpoints.Metrics;
-using Microsoft.EntityFrameworkCore;
 using RestAprilEducation.API.Endpoints.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using RestAprilEducation.API.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
+builder.Services.AddRateLimiter(options => 
+{
+    // Fixed Rate Limiter
+    options.AddFixedWindowLimiter("fixed-window-limiter", configureOptions =>
+    {
+        configureOptions.PermitLimit = 10;
+        configureOptions.Window = TimeSpan.FromMinutes(1);
+        configureOptions.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+        configureOptions.QueueLimit = 2;
+    });
+
+    // Sliding Window Limiter
+    options.AddSlidingWindowLimiter("sliding-window-limiter", configureOptions =>
+    {
+        configureOptions.PermitLimit = 15;
+        configureOptions.Window = TimeSpan.FromMinutes(1);
+        configureOptions.SegmentsPerWindow = 6;
+        configureOptions.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+        configureOptions.QueueLimit = 2;
+    });
+
+    // Token Bucket Limiter 
+    options.AddTokenBucketLimiter("token-bucket-limiter", configureOptions =>
+    {
+        configureOptions.TokenLimit = 20;
+        configureOptions.TokensPerPeriod = 5;
+        configureOptions.ReplenishmentPeriod = TimeSpan.FromSeconds(30);
+        configureOptions.QueueProcessingOrder = 
+            System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+        configureOptions.QueueLimit = 5;
+        configureOptions.AutoReplenishment = true;
+    });
+
+    options.AddPolicy("sms-policy", context =>
+    {
+        var ipAddress = context.Connection.RemoteIpAddress?.ToString() ?? "anonymous";
+
+        var userId = context.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier)!.Value ?? "anonymous";
+
+        var cityName = context.User.FindFirst(x => x.Type == "city")!.Value ?? "anonymous";
+
+        return RateLimitPartition.GetFixedWindowLimiter(ipAddress, _ => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = 30,
+            Window = TimeSpan.FromMinutes(1),
+            QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst,
+            QueueLimit = 2 
+        });
+
+        return RateLimitPartition.GetFixedWindowLimiter(userId, _ => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = 30,
+            Window = TimeSpan.FromMinutes(1),
+            QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst,
+            QueueLimit = 2
+        });
+
+        return RateLimitPartition.GetFixedWindowLimiter(cityName, _ => new FixedWindowRateLimiterOptions
+        {
+            PermitLimit = 30,
+            Window = TimeSpan.FromMinutes(1),
+            QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst,
+            QueueLimit = 2
+        });
+    });
+
+    options.AddConcurrencyLimiter("concurrency-limiter", options =>
+    {
+        options.PermitLimit = 5;
+        options.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 2;
+    });
+
+
+});
+
 
 builder.AddServiceDefaults();
 
@@ -89,8 +170,8 @@ builder.Services.AddAuthentication(configure =>
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = jwtSection["Issuer"],
             ValidAudience = jwtSection["Audience"],
+            ValidIssuer = jwtSection["Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection["SecretKey"]!))
         };
     });
