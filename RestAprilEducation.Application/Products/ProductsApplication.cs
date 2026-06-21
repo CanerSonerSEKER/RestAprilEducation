@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using RestAprilEducation.Application;
 using RestAprilEducation.Application.Products.Create;
 using RestAprilEducation.Application.Products.GetList;
 using RestAprilEducation.Application.Products.Update;
@@ -93,10 +95,11 @@ namespace RestAprilEducation.Application.Products
             var product = new Product
             {
                 Name = productRequest.Name,
-                Price = productRequest.Price,
                 Barcode = barcode,
                 CategoryId = productRequest.CategoryId
             };
+
+            product.SetPrice(productRequest.Price);
 
             await productRepository.AddAsync(product);
             // Veri tabanına yansıtma işlemini yapıyoruz.
@@ -122,7 +125,7 @@ namespace RestAprilEducation.Application.Products
             }
 
             product.Name = updateRequest.Name;
-            product.Price = updateRequest.Price;
+            product.SetPrice(updateRequest.Price);
 
             await productRepository.UpdateAsync(product);
             await unitOfWork.CommitAsync();

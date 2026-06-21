@@ -6,6 +6,8 @@ using System.Text;
 
 namespace RestAprilEducation.Domain
 {
+
+    // object = data +behaviour => rich domain model / anemic domain model 
     public class Product
     {
         public int Id { get; set; }
@@ -14,7 +16,7 @@ namespace RestAprilEducation.Domain
 
 
         // field burada price değişkenini tutar, property ise bu değişkene erişimi kontrol eder.
-        public decimal Price { get; set; }
+        public decimal Price { get; private set; }
         //{ Burada da validasyon yapılabiliyor diye göstermek için yaptık.
         //    get => field;
         //    set
@@ -47,6 +49,18 @@ namespace RestAprilEducation.Domain
         public int CategoryId { get; set; }
 
         public Category Category { get; set; } = null!;
+
+        public void SetPrice(decimal price) 
+        {
+            if (price < 0) 
+            {
+                throw new Exception("Fiyat alanı sıfırdan küçük olamaz");
+            }
+
+            Price = price;
+        }
+
+
 
     }
 }
