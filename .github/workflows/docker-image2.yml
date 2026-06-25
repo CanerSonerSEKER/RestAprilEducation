@@ -15,8 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Debug
-    - run: ls -R
+    - name: List File
+      run: ls -R
     
     - name: Build the Docker image
       run: docker build . --file RestAprilEducation/Dockerfile --tag my-image-name:$(date +%s)
