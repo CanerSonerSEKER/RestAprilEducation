@@ -70,7 +70,7 @@ jobs:
     # Step 7: Extract Docker metadata (image tags and OCI labels) based on the Git ref/event 
     - name: Exract metadata (tags, labels)
       id: meta
-      uses: docker/metadata-actions@v5
+      uses: docker/metadata-action@v5
       with:
         # Full image path in the registry (e.g ghcr.io/owner/repo)
         images: ${{ env.REGISTRY }} / ${{ env.IMAGE_NAME }}
