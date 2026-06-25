@@ -48,11 +48,11 @@ jobs:
 
     # Step 4: Build the solution (without restoring again) to catch compile errors 
     - name: Build 
-      run: docker build --no-restore
+      run: dotnet build --no-restore
 
     # Step 5: Run all unit/integration tests; fail the workflow if any test fails
     - name: Run tests
-      run: docker test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal
 
     # Step 6: Authenticate to Github Container Registry so we can push images
 
