@@ -84,7 +84,7 @@ jobs:
           # Semver: full version from Git tag, e.g. v1.2.3 -> 1.2.3
             type=semver, pattern={{version}}
           # Semver: major, minor only, e.g. v1.2.3 -> 1.2
-            type=semver, patter={{major}}.{{minor}}
+            type=semver, pattern={{major}}.{{minor}}
 
     # Step 8: Build on the Docker Image from the Dockerfile and push it to GHCR 
     - name: Build and push Docker image 
