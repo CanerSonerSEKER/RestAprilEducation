@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GrpcServer\GrpcServer.csproj" />
     <ProjectReference Include="..\RestAprilEducationRepository.RazorPages\RestAprilEducationRepository.RazorPages.csproj" />
     <ProjectReference Include="..\RestAprilEducation\RestAprilEducation.API.csproj" />
   </ItemGroup>
